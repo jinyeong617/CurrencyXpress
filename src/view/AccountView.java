@@ -4,7 +4,6 @@ import interface_adapter.account.AccountController;
 import interface_adapter.account.AccountState;
 import interface_adapter.account.AccountViewModel;
 import interface_adapter.view_exchangehistory.ViewExchangeHistoryViewModel;
-import use_case.view_exchangehistory.ViewExchangeHistory;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
@@ -62,9 +61,9 @@ public class AccountView extends JPanel implements ActionListener, PropertyChang
         exchange = new JButton(accountViewModel.EXCHANGE_BUTTON_LABEL);
         search = new JButton(accountViewModel.SEARCH_BUTTON_LABEL);
         buttons.add(logOut);
+        buttons.add(search);
         buttons.add(exchange);
         buttons.add(viewExchangeHistory);
-        buttons.add(search);
 
         exchange.addActionListener(
                 // This creates an anonymous subclass of ActionListener and instantiates it.
@@ -93,7 +92,6 @@ public class AccountView extends JPanel implements ActionListener, PropertyChang
         );
         viewExchangeHistory.addActionListener(this);
         search.addActionListener(
-                // This creates an anonymous subclass of ActionListener and instantiates it.
                 new ActionListener() {
                     public void actionPerformed(ActionEvent evt) {
                         if (evt.getSource().equals(search)) {
@@ -133,10 +131,6 @@ public class AccountView extends JPanel implements ActionListener, PropertyChang
         this.add(otherCurrencies);
         this.add(Box.createVerticalGlue());
         this.add(buttons);
-
-
-
-
     }
 
     /**
@@ -157,7 +151,7 @@ public class AccountView extends JPanel implements ActionListener, PropertyChang
         bank.setText(state.getBank());
 
         if (!(state.getCurrencies() == null)) {
-            tableModel.setRowCount(0);
+            tableModel.setRowCount(1);
             String[][] currencies = state.getCurrencies();
             for (String[] currency : currencies) {
                 tableModel.addRow(currency);
